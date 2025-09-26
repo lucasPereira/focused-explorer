@@ -2,6 +2,7 @@
   "name": "focused-explorer",
   "displayName": "Focused Explorer",
   "description": "Extension to keep only the active file ancestors folders expanded. The other folders will be collapsed.",
+  "icon": "images/logo.png",
   "version": "0.0.1",
   "repository": {
     "type": "git",
@@ -13,7 +14,19 @@
   "categories": [
     "Other"
   ],
-  "activationEvents": ["onStartupFinished"],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "contributes": {
+    "commands": [
+      {
+        "command": "focusedExplorer.toggle",
+        "title": "Focused Explorer: Toggle",
+        "icon": "$(fold)"
+
+      }
+    ]
+  },
   "main": "./out/extension.js",
   "scripts": {
     "package": "rm -f focused-explorer-*.vsix && vsce package",
@@ -26,7 +39,7 @@
     "@types/vscode": "^1.99.3",
     "@typescript-eslint/eslint-plugin": "^8.39.0",
     "@typescript-eslint/parser": "^8.39.0",
-    "@vscode/vsce": "^3.6.0",
+    "@vscode/vsce": "^3.6.1",
     "eslint": "^9.32.0",
     "typescript": "^5.9.2"
   }
