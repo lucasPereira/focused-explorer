@@ -3,7 +3,7 @@
   "displayName": "Focused Explorer",
   "description": "Extension to keep only the active file ancestors folders expanded. The other folders will be collapsed.",
   "icon": "images/logo.png",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/lucasPereira/focused-explorer"
@@ -23,7 +23,6 @@
         "command": "focusedExplorer.toggle",
         "title": "Focused Explorer: Toggle",
         "icon": "$(fold)"
-
       }
     ]
   },
