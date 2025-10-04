@@ -2,7 +2,19 @@ import * as vscode from 'vscode';
 
 function updateToggleButton(toggleButton: vscode.StatusBarItem, focusedExplorerEnabled: boolean) {
 	const icon = focusedExplorerEnabled ? 'pass' : 'circle-slash';
-	toggleButton.text = `$(fold) Focused Explorer: $(${icon})`;
+	const toggleButtonTitle = `Focused Explorer`;
+
+	const toggleButtonFormattedTitle =focusedExplorerEnabled
+		? toggleButtonTitle
+		: toggleButtonTitle.split('').join('\u0336');
+
+	toggleButton.text = `${toggleButtonFormattedTitle} $(${icon})`;
+	toggleButton.color = focusedExplorerEnabled ? undefined : new vscode.ThemeColor('disabledForeground');
+}
+
+function focus() {
+	vscode.commands.executeCommand('workbench.files.action.collapseExplorerFolders');
+	vscode.commands.executeCommand('workbench.files.action.showActiveFileInExplorer');
 }
 
 export async function activate(context: vscode.ExtensionContext) {
@@ -19,13 +31,15 @@ export async function activate(context: vscode.ExtensionContext) {
 		focusedExplorerEnabled = !focusedExplorerEnabled;
 		updateToggleButton(toggleButton, focusedExplorerEnabled);
 		await context.globalState.update('focusedExplorer.enabled', focusedExplorerEnabled);
+		if (focusedExplorerEnabled) {
+			focus();
+		}
 	});
 	context.subscriptions.push(toggleCommand);
 
 	const onTextEditorChange = vscode.window.onDidChangeActiveTextEditor(async editor => {
 		if (focusedExplorerEnabled) {
-			vscode.commands.executeCommand('workbench.files.action.collapseExplorerFolders');
-			vscode.commands.executeCommand('workbench.files.action.showActiveFileInExplorer');
+			focus();
 		}
 	});
 	context.subscriptions.push(onTextEditorChange);
